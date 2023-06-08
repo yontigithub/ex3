@@ -5,25 +5,34 @@
 #include "Queue.h"
 
 template <class T>
-void Queue<T>::push_back(T value) {
+void Queue<T>::pushBack(T value) {
     Node<T> node(value);
     node.SetNext(m_tail);
     m_tail.SetPrev(node);
+    m_tail = node;
     ++m_size;
 }
 
 template <class T>
 T& Queue<T>::front() const {
-    return m_head;
+    return m_head.GetValue();
 }
 
+
 template <class T>
+void Queue<T>::popFront() {
+    m_head.GetPrev().GetNext() = 0;
+    m_head.~Node();
+    m_size--;
+}
+
+/*template <class T>
 void Queue<T>::popFront() {
     m_tail.GetNext().SetPrev(0);
     m_tail.~Node();
     m_tail = m_tail.GetNext();
     --m_size;
-}
+}*/
 
 template <class T>
 int Queue<T>::size() const {

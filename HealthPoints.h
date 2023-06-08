@@ -24,6 +24,9 @@ public:
     bool operator>(const HealthPoints&);
     bool operator<=(const HealthPoints&);
     bool operator>=(const HealthPoints&);
+    friend std::ostream& operator<<(std::ostream& os, const HealthPoints& object);
+    
+    class InvalidArgument : public std::exception {};
 
 private:
     int m_maxHP;
@@ -33,10 +36,7 @@ private:
         os << object.m_HP << '(' << object.m_maxHP << ')';
         return os;
     }
-
-
-
-    class InvalidArgument : public std::exception {};
+   
 };
 
 #endif //EX3_HEALTH_POINTS_H

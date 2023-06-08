@@ -59,8 +59,8 @@ bool HealthPoints::operator>(const HealthPoints& object) {
     return m_HP > object.m_HP;
 }
 bool HealthPoints::operator<=(const HealthPoints& object) {
-    return m_HP == object.m_HP;
+    return m_HP <= object.m_HP;
 }
 bool HealthPoints::operator>=(const HealthPoints& object) {
-    return m_HP == object.m_HP;
+    return m_HP >= object.m_HP;
 }

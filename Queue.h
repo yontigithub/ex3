@@ -18,7 +18,7 @@ public:
     Queue(const Queue<T> &); // todo: implement methods
     ~Queue();
 
-    void push_back(T value);
+    void pushBack(T value);
     T& front() const;
     void popFront();
     int size() const;
@@ -26,6 +26,8 @@ public:
     class Iterator;
     Iterator begin() const;
     Iterator end() const;
+
+    class EmptyQueue : public std::exception;
 
 private:
     Node<T> m_head;
