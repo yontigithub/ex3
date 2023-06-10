@@ -27,21 +27,23 @@ public:
     Iterator begin() const;
     Iterator end() const;
 
+    class ConstIterator;
+
     class Node;
 
-    class EmptyQueue : public std::exception; // todo: Big red error
+    class EmptyQueue : public std::exception{}; // todo: Big red error
 
 
 private:
-    Node m_head;
-    Node m_tail;
+    Node *m_head;
+    Node *m_tail;
     int m_size;
 };
 
 template <class T>
 class Queue<T>::Iterator {
 public:
-    const T& operator*() const;
+    virtual T& operator*() const;
     Iterator& operator++();
     Iterator operator++(int);
     bool operator==(const Iterator& iterator) const;
@@ -49,12 +51,33 @@ public:
     Iterator(const Iterator&) = default;
     Iterator& operator=(const Iterator&) = default;
 
+    class InvalidOperation : public std::exception{};
 
 private:
-    Node m_node;
-    explicit Iterator(Node node);
+    Node *m_node;
+    explicit Iterator(Node* node);
     friend class Queue<T>;
 };
+
+template <class T>
+class Queue<T>::ConstIterator {
+    public:
+        const T& operator*() const;
+        ConstIterator& operator++();
+        ConstIterator operator++(int);
+        bool operator==(const ConstIterator& iterator) const;
+        bool operator!=(const ConstIterator& iterator) const;
+        ConstIterator(const ConstIterator&) = default;
+        ConstIterator(const Iterator&);
+        ConstIterator& operator=(const ConstIterator&) = default;
+
+        class InvalidOperation : public std::exception{};
+
+    private:
+        Node *m_node;
+        explicit ConstIterator(Node* node);
+        friend class Queue<T>;
+    };
 
 template <class T>
 class Queue<T>::Node {
@@ -78,3 +101,4 @@ template <class T>
 void transform(Queue<T>& queue, void (*TransformationFunction)(T&));
 
 #endif //EX3_QUEUE_H
+
